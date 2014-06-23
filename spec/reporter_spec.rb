@@ -74,4 +74,55 @@ describe Reporter do
 
     expect(reporter.average_commute_time).to eq expected
   end
+
+  it 'can calculate fastest walker' do
+    input = {
+        "Elsa" => [
+            {
+                week: 1,
+                day: "Monday",
+                mode: "Walk",
+                inbound: 10,
+                outbound: 10,
+                distance: 20
+            },
+        ],
+        "Bob" => [
+            {
+                week: 4,
+                day: "Monday",
+                mode: "Drive",
+                inbound: 10,
+                outbound: 20,
+                distance: 24
+            },
+        ],
+        "Felix" => [
+            {
+                week: 4,
+                day: "Monday",
+                mode: "Walk",
+                inbound: 5,
+                outbound: 5,
+                distance: 30
+            },
+        ],
+        "Sue" => [
+            {
+                week: 4,
+                day: "Monday",
+                mode: "Bike",
+                inbound: 10,
+                outbound: 20,
+                distance: 24
+            },
+        ]
+    }
+
+    reporter = Reporter.new(input)
+
+    expected = ["Felix", (30/5.0 + 30/5.0) / 2]
+
+    expect(reporter.fastest_walker).to eq expected
+  end
 end

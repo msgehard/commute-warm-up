@@ -22,4 +22,20 @@ class Reporter
 
     total_commute_time / total_data_points
   end
+
+  def fastest_walker
+    max_speed = 0
+    fastest_person = ""
+
+    @data.each do |name, trips|
+      trips.each do |trip|
+        average_speed = (trip[:distance] * 2) / (trip[:inbound] + trip[:outbound])
+        if average_speed > max_speed
+          max_speed = average_speed
+          fastest_person = name
+        end
+      end
+    end
+    [fastest_person, max_speed]
+  end
 end
