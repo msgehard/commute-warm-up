@@ -12,18 +12,26 @@ class DataParser
           distance: row[6]
       }
       result[row[0]] = (existing_data << new_data).sort do |a, b|
-        comp = (a[:week] <=> b[:week])
-        if comp.zero?
-          day_number(a[:day]) <=> day_number(b[:day])
+        week_same = compare_by_week(a, b).zero?
+        if week_same
+          compare_by_day(a, b)
         else
-          comp
+          compare_by_week(a, b)
         end
       end
     end
     result
   end
 
+  def compare_by_week(a, b)
+    a[:week] <=> b[:week]
+  end
+
   private
+
+  def compare_by_day(a, b)
+    day_number(a[:day]) <=> day_number(b[:day])
+  end
 
   def day_number(day)
     case day
